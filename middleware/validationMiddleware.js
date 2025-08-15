@@ -6,15 +6,13 @@ const validateRegistration = [
     body('name').notEmpty().withMessage('Name is required'),
 
     // Email validation (Format Check)
-    body('email')
-        .notEmpty().withMessage('Email is required')
+    body('phone')
+        .notEmpty().withMessage('Phone is required')
         .bail() // Stops if the previous validation fails
-        .isEmail().withMessage('Invalid email format')
-        .bail()
-        .custom(async (email) => {
-            const existingUser = await User.findOne({ email });
+        .custom(async (phone) => {
+            const existingUser = await User.findOne({ phone });
             if (existingUser) {
-                throw new Error('Email already in use');
+                throw new Error('Phone already in use');
             }
         }),
 

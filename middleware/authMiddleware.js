@@ -15,7 +15,7 @@ const protect = async (req, res, next) => {
 };
 
 const isAdmin = (req, res, next) => {
-    if (req.user.role !== 'admin') {
+    if (req.user.role !== 'owner') {
         return res.status(403).json({ success: false, data: null,  message: 'Forbidden: Your not admin' });
     }
     next();

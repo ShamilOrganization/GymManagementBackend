@@ -2,7 +2,20 @@ const User = require('../models/User');
 
 const getAllUsers = async (req, res) => {
     const users = await User.find().select('-password');
-    res.json(users);
+    // Map users to clean format
+    const cleanedUsers = users.map(user => ({
+        id: user.userId,
+        name: user.name,
+        phone: user.phone || null,
+        role: user.role,
+        gymId: user.gymId || null
+    }));
+
+    res.json({
+        success: true,
+        message: 'Users fetched successfully',
+        data: cleanedUsers
+    });
 };
 
 const setUserAdmin = async (req, res) => {
@@ -15,9 +28,9 @@ const setUserAdmin = async (req, res) => {
 
         if (!updatedUser) return res.status(404).json({ message: "User not found" });
 
-        res.json({ "success": true, "message": "User set admin successfully" });
+        res.json({ "success": true, data: true, "message": "User set admin successfully" });
     } catch (error) {
-        res.json(500).json({ success: false, data: null,  message: error.message });
+        res.json(500).json({ success: false, data: null, message: error.message });
     }
 }
 

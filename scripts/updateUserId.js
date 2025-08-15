@@ -4,38 +4,46 @@ require('dotenv').config();
 
 const updateUserIds = async () => {
     try {
-        // Connect to MongoDB
         await mongoose.connect(process.env.MONGO_URI, {
             useNewUrlParser: true,
             useUnifiedTopology: true,
         });
-
         console.log("Connected to MongoDB...");
 
-        // Find all users without a userId
-        const users = await User.find({ userId: { $exists: false } }).sort({ _id: 1 });
+        const users = await User.find();
 
         if (users.length === 0) {
-            console.log("All users already have a userId.");
+            console.log("No users found.");
             process.exit(0);
         }
 
         console.log(`Updating ${users.length} users...`);
 
-        let lastUser = await User.findOne().sort({ userId: -1 });
-        let nextId = lastUser && lastUser.userId ? lastUser.userId + 1 : 1;
-
         for (let user of users) {
-            await User.updateOne({ _id: user._id }, { $set: { userId: nextId } });
-            console.log(`Assigned userId ${nextId} to ${user.email}`);
-            nextId++;
+            const updateQuery = {};
+
+            // Set phone and gymId if phone is missing
+            if (!user.phone || user.phone === null) {
+                updateQuery.$set = { phone: "122", gymId: null };
+            }
+
+            // Remove email if it exists
+            if (user.email) {
+                updateQuery.$unset = { email: "" };
+            }
+
+            // Only update if there’s something to update
+            if (Object.keys(updateQuery).length > 0) {
+                await User.updateOne({ _id: user._id }, updateQuery);
+                console.log(`Updated user with _id ${user._id}`);
+            }
         }
 
-        console.log("User ID update complete.");
+        console.log("User update complete.");
         process.exit(0);
 
     } catch (error) {
-        console.error("Error updating userId:", error);
+        console.error("Error updating users:", error);
         process.exit(1);
     }
 };

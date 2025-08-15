@@ -4,14 +4,15 @@ const AutoIncrement = require('mongoose-sequence')(mongoose);
 
 const UserSchema = new mongoose.Schema({
     userId: { type: Number, unique: true }, // Auto-incremented user ID
+    gymId: { type: Number, required: true },
     name: { type: String, required: true },
-    email: { type: String, required: true, unique: true },
+    phone: { type: String, required: true, unique: true },
     password: { type: String, required: true, select: false }, // Password will not be returned by default
     role: {
         type: String, 
-        enum: ['user', 'admin'], 
+        enum: ['member', 'admin','owner'], 
         required: true, // ✅ Enforce role to be mandatory
-        default: 'user'
+        default: 'member'
     }
 });
 
