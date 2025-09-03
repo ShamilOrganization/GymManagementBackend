@@ -9,12 +9,14 @@ const UserSchema = new mongoose.Schema({
     phone: { type: String, required: true, unique: true },
     password: { type: String, required: true, select: false }, // Password will not be returned by default
     role: {
-        type: String, 
-        enum: ['member', 'admin','owner'], 
+        type: String,
+        enum: ['member', 'admin', 'owner'],
         required: true, // ✅ Enforce role to be mandatory
         default: 'member'
-    }
-});
+    },
+    lastPaymentId: { type: Number, default: null }, // New field for last payment ID
+    addedTrainerId: { type: Number, required: true } // New field for trainer ID, now required
+}, { timestamps: true }); // Add timestamps option
 
 // Auto-increment userId field
 UserSchema.plugin(AutoIncrement, { inc_field: 'userId' });
