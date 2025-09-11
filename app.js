@@ -2,12 +2,19 @@ const express = require('express');
 const connectDB = require('./config/db');
 const authRoutes = require('./routes/authRoutes');
 const userRoutes = require('./routes/userRoutes');
+const path = require('path');
 
 require('dotenv').config();
 connectDB();
 const app = express();
 
 app.use(express.json());
+app.use(express.static(path.join(__dirname, 'public')));
+
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
 app.use('/api/auth', authRoutes);
 app.use('/api/user', userRoutes);
 
