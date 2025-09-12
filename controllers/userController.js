@@ -66,7 +66,7 @@ const createUser = async (req, res) => {
     }
 };
 
-const getUserProfile = async (req, res) => {
+const getMyProfile = async (req, res) => {
     try {
         // req.user is populated by the protect middleware
         if (req.user) {
@@ -84,4 +84,4 @@ const getUserProfile = async (req, res) => {
     }
 };
 
-module.exports = { getAllUsers, setUserAdmin, createUser, getUserProfile };
+module.exports = { getAllUsers, getMyProfile, setUserAdmin, createUser };
