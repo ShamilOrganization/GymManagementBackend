@@ -15,14 +15,14 @@ const protect = async (req, res, next) => {
 };
 
 const isDeveloperPermission = (req, res, next) => {
-    if (req.user.role !== 'owner' && req.user.role !== 'developer') {
+    if (req.user.role !== 'developer') {
         return res.status(403).json({ success: false, data: null, message: 'Forbidden: Your not admin' });
     }
     next();
 };
 
 const isOwnerPermission = (req, res, next) => {
-    if (req.user.role !== 'owner') {
+    if (req.user.role !== 'owner' && req.user.role !== 'developer') {
         return res.status(403).json({ success: false, data: null, message: 'Forbidden: Your not admin' });
     }
     next();

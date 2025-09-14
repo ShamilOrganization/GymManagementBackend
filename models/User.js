@@ -4,7 +4,7 @@ const AutoIncrement = require('mongoose-sequence')(mongoose);
 
 const UserSchema = new mongoose.Schema({
     userId: { type: Number, unique: true }, // Auto-incremented user ID
-    gymId: { type: Number, required: true },
+    gymId: { type: mongoose.Schema.Types.Number, ref: 'Gym', required: true },
     name: { type: String, required: true },
     phone: { type: String, required: true, unique: true },
     password: { type: String, required: true, select: false }, // Password will not be returned by default
@@ -14,7 +14,7 @@ const UserSchema = new mongoose.Schema({
         required: true, // ✅ Enforce role to be mandatory
         default: 'member'
     },
-    lastPaymentId: { type: Number, default: null }, // New field for last payment ID
+    lastPaymentId: { type: mongoose.Schema.Types.Number, ref: 'Payment', default: null }, // New field for last payment ID
     addedTrainerId: { type: Number, required: true } // New field for trainer ID, now required
 }, { timestamps: true }); // Add timestamps option
 

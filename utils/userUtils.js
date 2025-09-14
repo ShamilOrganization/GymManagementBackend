@@ -9,7 +9,8 @@ const formatUserDetails = async (user) => {
         gymId: user.gymId,
         lastPaymentId: user.lastPaymentId,
         createdAt: user.createdAt,
-        updatedAt: user.updatedAt
+        updatedAt: user.updatedAt,
+        status: user.lastPaymentId === null ? 'pending' : 'active'
     };
 
     if (user.addedTrainerId) {

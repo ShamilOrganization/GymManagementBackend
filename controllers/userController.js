@@ -1,20 +1,34 @@
 const User = require('../models/User');
 const { formatUserDetails } = require('../utils/userUtils');
 
-const getAllUsers = async (req, res) => {
-    const users = await User.find().select('-password');
+const getAllMembers = async (req, res) => {
+    const gymId = req.user.gymId;
+    const users = await User.find({ gymId }).select('-password');
     // Map users to clean format
     const cleanedUsers = await Promise.all(users.map(async (user) => {
         return await formatUserDetails(user);
     }));
 
+    // Calculate summary
+    const total = cleanedUsers.length;
+    const active = cleanedUsers.filter(user => user.status === 'active').length;
+    const pending = cleanedUsers.filter(user => user.status === 'pending').length;
+    const closed = cleanedUsers.filter(user => user.status === 'closed').length;
+
     res.json({
         success: true,
         message: 'Users fetched successfully',
-        data: cleanedUsers
+        data: {
+            summary: {
+                total,
+                active,
+                pending,
+                closed
+            },
+            members: cleanedUsers
+        }
     });
 };
-
 const setUserAdmin = async (req, res) => {
     try {
         const updatedUser = await User.findOneAndUpdate(
@@ -84,4 +98,4 @@ const getMyProfile = async (req, res) => {
     }
 };
 
-module.exports = { getAllUsers, getMyProfile, setUserAdmin, createUser };
+module.exports = { getAllMembers, getMyProfile, setUserAdmin, createUser };

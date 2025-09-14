@@ -1,10 +1,9 @@
 const express = require('express');
-const { getMyProfile, getAllUsers, setUserAdmin, createUser } = require('../controllers/userController');
+const { getMyProfile, setUserAdmin, createUser, getAllMembers } = require('../controllers/userController');
 const { protect, isOwnerPermission } = require('../middleware/authMiddleware');
 const router = express.Router();
 router.get('/', protect, getMyProfile);
-router.get('/all', protect, isOwnerPermission, getAllUsers);
 // router.post('/setAdmin/:id', protect, isAdminPermission, setUserAdmin);
 router.post('/create', protect, isOwnerPermission, createUser);
-router.get('/me', protect, getMyProfile);
+router.get('/members', protect, isOwnerPermission, getAllMembers);
 module.exports = router;
