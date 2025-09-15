@@ -1,4 +1,5 @@
 const User = require('../models/User');
+const moment = require('moment');
 
 const formatUserDetails = async (user) => {
     const details = {
@@ -8,7 +9,7 @@ const formatUserDetails = async (user) => {
         role: user.role,
         gymId: user.gymId,
         monthlyFee: user.monthlyFee,
-        joinedDate: user.joinedDate,
+        joinedDate: moment(user.joinedDate).format('YYYY-MM-DD'),
         pendingAmount: user.pendingAmount,
         lastPaymentId: user.lastPaymentId,
         createdAt: user.createdAt,
