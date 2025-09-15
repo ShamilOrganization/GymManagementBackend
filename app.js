@@ -3,6 +3,8 @@ const connectDB = require('./config/db');
 const authRoutes = require('./routes/authRoutes');
 const userRoutes = require('./routes/userRoutes'); 
 const path = require('path');
+require('./scripts/calculatePendingAmount.js');
+
 
 require('dotenv').config();
 connectDB();

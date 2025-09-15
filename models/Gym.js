@@ -14,4 +14,7 @@ const GymSchema = new mongoose.Schema({
 
 GymSchema.plugin(AutoIncrement, { inc_field: 'gymId' });
 
+GymSchema.index({ name: 1 });
+GymSchema.index({ address: 1 });
+
 module.exports = mongoose.model('Gym', GymSchema, 'gyms');

@@ -1,9 +1,12 @@
 const User = require('../models/User');
 const { formatUserDetails } = require('../utils/userUtils');
+const { calculatePendingAmounts } = require('../scripts/calculatePendingAmount');
+const moment = require('moment');
 
 const getAllMembers = async (req, res) => {
     const gymId = req.user.gymId;
-    const users = await User.find({ gymId }).select('-password');
+    const users = await User.find({ gymId, role: 'developer' }).select('-password');
+    // const users = await User.find({ gymId, role: 'member' }).select('-password');
     // Map users to clean format
     const cleanedUsers = await Promise.all(users.map(async (user) => {
         return await formatUserDetails(user);
@@ -98,4 +101,19 @@ const getMyProfile = async (req, res) => {
     }
 };
 
-module.exports = { getAllMembers, getMyProfile, setUserAdmin, createUser };
+const triggerCalculatePendingAmounts = async (req, res) => {
+    try {
+        const startTime = moment();
+        await calculatePendingAmounts();
+        const endTime = moment();
+        const duration = moment.duration(endTime.diff(startTime));
+        const minutes = duration.minutes();
+        const seconds = duration.seconds();
+        res.json({ success: true, message: `Pending amounts calculation triggered successfully in ${minutes} minutes ${seconds} seconds.` });
+    } catch (error) {
+        console.error('Error triggering pending amounts calculation:', error);
+        res.status(500).json({ success: false, message: 'Failed to trigger pending amounts calculation.' });
+    }
+};
+
+module.exports = { getAllMembers, getMyProfile, setUserAdmin, createUser, triggerCalculatePendingAmounts };

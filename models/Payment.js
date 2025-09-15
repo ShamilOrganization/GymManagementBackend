@@ -15,4 +15,6 @@ const PaymentSchema = new mongoose.Schema({
 
 PaymentSchema.plugin(AutoIncrement, { inc_field: 'paymentId' });
 
+PaymentSchema.index({ status: 1 });
+
 module.exports = mongoose.model('Payment', PaymentSchema, 'payments');
