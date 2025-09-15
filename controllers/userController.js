@@ -50,13 +50,7 @@ const setUserAdmin = async (req, res) => {
 
 const createUser = async (req, res) => {
     try {
-        const { name, phone, password } = req.body;
-
-        // Check if user already exists
-        const userExists = await User.findOne({ phone });
-        if (userExists) {
-            return res.status(400).json({ success: false, data: null, message: 'User with this phone number already exists' });
-        }
+        const { name, phone, password, monthlyFee, joinedDate } = req.body;
 
         // The admin's gymId is available from req.user (set by protect middleware)
         const gymId = req.user.gymId;
@@ -68,7 +62,9 @@ const createUser = async (req, res) => {
             password,
             gymId,
             role: 'member',
-            addedTrainerId // Set the addedTrainerId
+            addedTrainerId, // Set the addedTrainerId
+            monthlyFee, // Set the monthlyFee
+            joinedDate // Set the joinedDate
         });
 
         const formattedUser = await formatUserDetails(user);
