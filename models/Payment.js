@@ -3,7 +3,7 @@ const AutoIncrement = require('mongoose-sequence')(mongoose);
 
 const PaymentSchema = new mongoose.Schema({
     paymentId: { type: Number, unique: true },
-    photo: { type: String, required: true }, // URL or path to the payment photo
+    userId: { type: Number, required: true },
     amount: { type: Number, required: true },
     status: {
         type: String,
@@ -13,7 +13,7 @@ const PaymentSchema = new mongoose.Schema({
     },
 }, { timestamps: true });
 
-PaymentSchema.plugin(AutoIncrement, { inc_field: 'paymentId',start_seq: 10001 });
+PaymentSchema.plugin(AutoIncrement, { inc_field: 'paymentId', start_seq: 10001 });
 
 PaymentSchema.index({ status: 1 });
 

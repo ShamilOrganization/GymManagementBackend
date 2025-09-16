@@ -1,6 +1,8 @@
 const Payment = require('../models/Payment');
 const User = require('../models/User');
 const moment = require('moment');
+const { calculateSingleUserPendingAmount } = require('../scripts/calculatePendingAmount');
+const { formatPaymentDetails } = require('../utils/formatUtils');
 
 // Create a new payment
 const createPayment = async (req, res) => {
@@ -21,9 +23,9 @@ const createPayment = async (req, res) => {
         const newPayment = await payment.save();
 
         user.lastPaymentId = newPayment.paymentId;
-        await user.save();
+        await calculateSingleUserPendingAmount(user);
 
-        res.status(201).json({ success: true, message: 'Payment created successfully.', data: newPayment });
+        res.status(201).json({ success: true, message: 'Payment created successfully.', data: formatPaymentDetails(newPayment) });
     } catch (error) {
         res.status(500).json({ success: false, message: error.message });
     }
@@ -40,7 +42,7 @@ const getAllPayments = async (req, res) => {
 };
 
 // Get payment by ID
-const  getPaymentById = async (req, res) => {
+const getPaymentById = async (req, res) => {
     try {
         const payment = await Payment.findOne({ paymentId: req.params.id });
         if (!payment) {
@@ -55,10 +57,10 @@ const  getPaymentById = async (req, res) => {
 // Update a payment
 const updatePayment = async (req, res) => {
     try {
-        const { amount, status, photo } = req.body;
+        const { amount, status } = req.body;
         const payment = await Payment.findOneAndUpdate(
             { paymentId: req.params.id },
-            { amount, status, photo },
+            { amount, status },
             { new: true, runValidators: true }
         );
 

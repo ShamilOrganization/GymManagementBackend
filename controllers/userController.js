@@ -1,5 +1,5 @@
 const User = require('../models/User');
-const { formatUserDetails } = require('../utils/userUtils');
+const { formatUserDetails } = require('../utils/formatUtils');
 
 const getAllMembers = async (req, res) => {
     const gymId = req.user.gymId;

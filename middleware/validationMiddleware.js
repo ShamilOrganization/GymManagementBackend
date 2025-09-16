@@ -73,9 +73,6 @@ const validatePaymentUpdate = [
     body('status')
         .optional()
         .isIn(['pending', 'completed', 'failed', 'refunded']).withMessage('Invalid status'),
-    body('photo')
-        .optional()
-        .notEmpty().withMessage('Photo cannot be empty if provided'),
     (req, res, next) => {
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
