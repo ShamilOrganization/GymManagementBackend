@@ -1,7 +1,9 @@
 const express = require('express');
 const connectDB = require('./config/db');
 const authRoutes = require('./routes/authRoutes');
-const userRoutes = require('./routes/userRoutes'); 
+const userRoutes = require('./routes/userRoutes');
+const paymentRoutes = require('./routes/paymentRoutes');
+const gymRoutes = require('./routes/gymRoutes');
 const path = require('path');
 require('./scripts/calculatePendingAmount.js');
 
@@ -19,6 +21,8 @@ app.get('/', (req, res) => {
 
 app.use('/api/auth', authRoutes);
 app.use('/api/user', userRoutes);
+app.use('/api/payments', paymentRoutes);
+app.use('/api/gyms', gymRoutes);
 
 // 404 Not Found Middleware
 // This must be placed after all defined routes.

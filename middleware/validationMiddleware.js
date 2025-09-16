@@ -42,4 +42,96 @@ const validateCreateUser = [
     }
 ];
 
-module.exports = { validateCreateUser };
+const validatePayment = [
+    body('userId')
+        .notEmpty().withMessage('User ID is required')
+        .bail()
+        .isNumeric().withMessage('User ID must be a number')
+        .custom(async (userId) => {
+            const user = await User.findOne({ userId });
+            if (!user) {
+                throw new Error('User not found');
+            }
+        }),
+    body('amount')
+        .notEmpty().withMessage('Amount is required')
+        .bail()
+        .isNumeric().withMessage('Amount must be a number'),
+    (req, res, next) => {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ success: false, data: null, message: errors.array()[0].msg });
+        }
+        next();
+    }
+];
+
+const validatePaymentUpdate = [
+    body('amount')
+        .optional()
+        .isNumeric().withMessage('Amount must be a number'),
+    body('status')
+        .optional()
+        .isIn(['pending', 'completed', 'failed', 'refunded']).withMessage('Invalid status'),
+    body('photo')
+        .optional()
+        .notEmpty().withMessage('Photo cannot be empty if provided'),
+    (req, res, next) => {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ success: false, data: null, message: errors.array()[0].msg });
+        }
+        next();
+    }
+];
+
+const validateCreateGym = [
+    body('name').notEmpty().withMessage('Gym name is required'),
+    body('address').notEmpty().withMessage('Gym address is required'),
+    body('geopoint.latitude')
+        .notEmpty().withMessage('Latitude is required')
+        .bail()
+        .isNumeric().withMessage('Latitude must be a number'),
+    body('geopoint.longitude')
+        .notEmpty().withMessage('Longitude is required')
+        .bail()
+        .isNumeric().withMessage('Longitude must be a number'),
+    body('normalFee')
+        .notEmpty().withMessage('Normal fee is required')
+        .bail()
+        .isNumeric().withMessage('Normal fee must be a number'),
+    (req, res, next) => {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ success: false, data: null, message: errors.array()[0].msg });
+        }
+        next();
+    }
+];
+
+const validateGymUpdate = [
+    body('name')
+        .optional()
+        .notEmpty().withMessage('Gym name cannot be empty if provided'),
+    body('address')
+        .optional()
+        .notEmpty().withMessage('Gym address cannot be empty if provided'),
+    body('geopoint.latitude')
+        .optional()
+        .isNumeric().withMessage('Latitude must be a number'),
+    body('geopoint.longitude')
+        .optional()
+        .isNumeric().withMessage('Longitude must be a number'),
+    body('normalFee')
+        .optional()
+        .isNumeric().withMessage('Normal fee must be a number'),
+    (req, res, next) => {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ success: false, data: null, message: errors.array()[0].msg });
+        }
+        next();
+    }
+];
+
+module.exports = { validateCreateUser, validatePayment, validatePaymentUpdate, validateCreateGym, validateGymUpdate };

@@ -1,6 +1,6 @@
 const User = require('../models/User');
 const { formatUserDetails } = require('../utils/userUtils');
-const { calculatePendingAmounts } = require('../scripts/calculatePendingAmount');
+const { calculateAllUserPendingAmount } = require('../scripts/calculatePendingAmount');
 const moment = require('moment');
 
 const getAllMembers = async (req, res) => {
@@ -100,7 +100,7 @@ const getMyProfile = async (req, res) => {
 const triggerCalculatePendingAmounts = async (req, res) => {
     try {
         const startTime = moment();
-        await calculatePendingAmounts();
+        await calculateAllUserPendingAmount();
         const endTime = moment();
         const duration = moment.duration(endTime.diff(startTime));
         const minutes = duration.minutes();
