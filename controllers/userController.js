@@ -1,7 +1,5 @@
 const User = require('../models/User');
 const { formatUserDetails } = require('../utils/userUtils');
-const { calculateAllUserPendingAmount } = require('../scripts/calculatePendingAmount');
-const moment = require('moment');
 
 const getAllMembers = async (req, res) => {
     const gymId = req.user.gymId;
@@ -97,19 +95,4 @@ const getMyProfile = async (req, res) => {
     }
 };
 
-const triggerCalculatePendingAmounts = async (req, res) => {
-    try {
-        const startTime = moment();
-        await calculateAllUserPendingAmount();
-        const endTime = moment();
-        const duration = moment.duration(endTime.diff(startTime));
-        const minutes = duration.minutes();
-        const seconds = duration.seconds();
-        res.json({ success: true, message: `Pending amounts calculation triggered successfully in ${minutes} minutes ${seconds} seconds.` });
-    } catch (error) {
-        console.error('Error triggering pending amounts calculation:', error);
-        res.status(500).json({ success: false, message: 'Failed to trigger pending amounts calculation.' });
-    }
-};
-
-module.exports = { getAllMembers, getMyProfile, setUserAdmin, createUser, triggerCalculatePendingAmounts };
+module.exports = { getAllMembers, getMyProfile, setUserAdmin, createUser };

@@ -4,6 +4,7 @@ const authRoutes = require('./routes/authRoutes');
 const userRoutes = require('./routes/userRoutes');
 const paymentRoutes = require('./routes/paymentRoutes');
 const gymRoutes = require('./routes/gymRoutes');
+const calculationRoutes = require('./routes/calculationRoutes');
 const path = require('path');
 require('./scripts/calculatePendingAmount.js');
 
@@ -23,6 +24,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/user', userRoutes);
 app.use('/api/payments', paymentRoutes);
 app.use('/api/gyms', gymRoutes);
+app.use('/api/calculations', calculationRoutes);
 
 // 404 Not Found Middleware
 // This must be placed after all defined routes.
