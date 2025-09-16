@@ -1,9 +1,6 @@
 const User = require('../models/User');
 const { generateToken } = require('../utils/jwtUtils');
-const bcrypt = require('bcryptjs');
-
-// const register = async (req, res) => {
-//     try {
+const bcrypt = require('bcryptjs');//     try {
 //         const { name, phone, password, gymId, role } = req.body;
 
 //         // Validate required fields
@@ -95,4 +92,4 @@ const login = async (req, res) => {
     }
 };
 
-module.exports = {  login };
+module.exports = { login };
