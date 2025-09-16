@@ -13,7 +13,7 @@ const PaymentSchema = new mongoose.Schema({
     },
 }, { timestamps: true });
 
-PaymentSchema.plugin(AutoIncrement, { inc_field: 'paymentId' });
+PaymentSchema.plugin(AutoIncrement, { inc_field: 'paymentId',start_seq: 10001 });
 
 PaymentSchema.index({ status: 1 });
 

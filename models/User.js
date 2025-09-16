@@ -22,7 +22,7 @@ const UserSchema = new mongoose.Schema({
 }, { timestamps: true }); // Add timestamps option
 
 // Auto-increment userId field
-UserSchema.plugin(AutoIncrement, { inc_field: 'userId' });
+UserSchema.plugin(AutoIncrement, { inc_field: 'userId',start_seq: 1001 });
 
 // Hash password before saving
 UserSchema.pre('save', async function (next) {

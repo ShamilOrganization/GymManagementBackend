@@ -12,7 +12,7 @@ const GymSchema = new mongoose.Schema({
     normalFee: { type: Number, required: true }
 }, { timestamps: true });
 
-GymSchema.plugin(AutoIncrement, { inc_field: 'gymId' });
+GymSchema.plugin(AutoIncrement, { inc_field: 'gymId' ,start_seq: 101});
 
 GymSchema.index({ name: 1 });
 
