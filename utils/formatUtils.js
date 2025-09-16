@@ -11,26 +11,21 @@ const formatUserDetails = async (user) => {
         monthlyFee: user.monthlyFee,
         joinedDate: moment(user.joinedDate).format('YYYY-MM-DD'),
         pendingAmount: user.pendingAmount,
-        lastPaymentId: user.lastPaymentId,
         createdAt: user.createdAt,
         updatedAt: user.updatedAt,
-        status: user.lastPaymentId === null ? 'pending' : 'active'
+        status: user.pendingAmount === 0 ? 'active' : 'pending'
     };
 
-    if (user.addedTrainerId) {
-        const trainer = await User.findOne({ userId: user.addedTrainerId }).select('name');
-        details.addedTrainer = trainer ? trainer.name : null;
+    if (user.lastPaymentId && typeof user.lastPaymentId === 'object') {
+        const payment = user.lastPaymentId;
+        details.lastPayment = {
+            id: payment.paymentId,
+            amount: payment.amount,
+            date: payment.createdAt
+        };
     } else {
-        details.addedTrainer = null;
+        details.lastPayment = null;
     }
-    // if (user.lastPaymentId && typeof user.lastPaymentId === 'object') {
-    //     const payment = user.lastPaymentId;
-    //     details.lastPayment = {
-    //         amount: payment.amount,
-    //         // date: moment(payment.date).format('YYYY-MM-DD'),
-    //         // status: payment.status || 'unknown'
-    //     };
-    // }
     return details;
 };
 

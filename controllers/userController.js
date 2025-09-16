@@ -3,7 +3,13 @@ const { formatUserDetails } = require('../utils/formatUtils');
 
 const getAllMembers = async (req, res) => {
     const gymId = req.user.gymId;
-    const users = await User.find({ gymId, role: 'developer' }).select('-password');
+    const users = await User.find({ gymId, role: 'developer' }).select('-password').populate({
+        path: 'lastPaymentId',
+        foreignField: 'paymentId',
+        model: 'Payment',
+        select: 'paymentId amount createdAt',
+        justOne: true
+    });
     // const users = await User.find({ gymId, role: 'member' }).select('-password');
     // Map users to clean format
     const cleanedUsers = await Promise.all(users.map(async (user) => {
@@ -80,16 +86,25 @@ const createUser = async (req, res) => {
 const getMyProfile = async (req, res) => {
     try {
         // req.user is populated by the protect middleware
-        if (req.user) {
-            const formattedUser = await formatUserDetails(req.user);
-            res.json({
-                success: true,
-                message: 'User profile fetched successfully',
-                data: formattedUser
+        const user = await User.findById(req.user.id)
+            .populate({
+                path: 'lastPaymentId',
+                foreignField: 'paymentId',
+                model: 'Payment',
+                select: 'paymentId amount createdAt',
+                justOne: true
             });
-        } else {
-            res.status(404).json({ success: false, data: null, message: 'User not found' });
+
+        if (!user) {
+            return res.status(404).json({ success: false, data: null, message: 'User not found' });
         }
+
+        const formattedUser = await formatUserDetails(user);
+        res.json({
+            success: true,
+            message: 'User profile fetched successfully',
+            data: formattedUser
+        });
     } catch (error) {
         res.status(500).json({ success: false, data: null, message: error.message });
     }
