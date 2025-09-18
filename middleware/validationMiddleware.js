@@ -9,6 +9,8 @@ const validateCreateUser = [
     body('phone')
         .notEmpty().withMessage('Phone number is required')
         .bail() // Stops if the previous validation fails
+        .isNumeric().withMessage('Phone number must contain only digits')
+        .isLength({ min: 10, max: 10 }).withMessage('Phone number must be 10 digits long')
         .custom(async (phone) => {
             const existingUser = await User.findOne({ phone });
             if (existingUser) {
