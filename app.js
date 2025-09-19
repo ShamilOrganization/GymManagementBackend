@@ -27,7 +27,7 @@ app.use('/api/user', userRoutes);
 app.use('/api/payment', paymentRoutes);
 app.use('/api/gym', gymRoutes);
 app.use('/api/calculations', calculationRoutes);
-app.use('/api/test', testRoutes);
+// app.use('/api/test', testRoutes);
 
 app.use(notFound);
 app.use(errorHandler);

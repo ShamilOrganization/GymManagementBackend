@@ -3,8 +3,8 @@ const { formatUserDetails } = require('../utils/formatUtils');
 
 const getAllMembers = async (req, res) => {
     const gymId = req.user.gymId;
-    // const users = await User.find({ gymId, role: 'developer' }).select('-password').populate({
-    const users = await User.find({ gymId, }).select('-password').populate({
+    const users = await User.find({ gymId, role: 'member' }).select('-password').populate({
+    // const users = await User.find({ gymId, }).select('-password').populate({
         path: 'lastPaymentId',
         foreignField: 'paymentId',
         model: 'Payment',
