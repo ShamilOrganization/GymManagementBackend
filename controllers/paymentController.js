@@ -34,8 +34,33 @@ const createPayment = async (req, res) => {
 // Get all payments
 const getAllPayments = async (req, res) => {
     try {
-        const payments = await Payment.find({});
-        res.status(200).json({ success: true, message: 'Payments fetched successfully.', data: payments });
+        const { page = 1, limit = 20 } = req.query;
+        const skip = (page - 1) * limit;
+
+        const totalPayments = await Payment.countDocuments({});
+        const totalPages = Math.ceil(totalPayments / limit);
+
+        const payments = await Payment.find({})
+            .populate({
+                path: 'userId',
+                foreignField: 'userId',
+                model: 'User',
+                select: 'userId name phone',
+                justOne: true
+            })
+            .skip(skip)
+            .limit(parseInt(limit));
+        const formattedPayments = payments.map(formatPaymentDetails);
+        res.status(200).json({
+            success: true,
+            message: 'Payments fetched successfully.',
+            data: {
+                payments: formattedPayments,
+                currentPage: parseInt(page),
+                totalPages,
+                totalPayments
+            }
+        });
     } catch (error) {
         res.status(500).json({ success: false, message: error.message });
     }
@@ -44,11 +69,18 @@ const getAllPayments = async (req, res) => {
 // Get payment by ID
 const getPaymentById = async (req, res) => {
     try {
-        const payment = await Payment.findOne({ paymentId: req.params.id });
+        const payment = await Payment.findOne({ paymentId: req.params.id })
+            .populate({
+                path: 'userId',
+                foreignField: 'userId',
+                model: 'User',
+                select: 'userId name phone',
+                justOne: true
+            });
         if (!payment) {
             return res.status(404).json({ success: false, message: 'Payment not found.' });
         }
-        res.status(200).json({ success: true, message: 'Payment fetched successfully.', data: payment });
+        res.status(200).json({ success: true, message: 'Payment fetched successfully.', data: formatPaymentDetails(payment) });
     } catch (error) {
         res.status(500).json({ success: false, message: error.message });
     }
@@ -86,4 +118,27 @@ const deletePayment = async (req, res) => {
     }
 };
 
-module.exports = { createPayment, getAllPayments, getPaymentById, updatePayment, deletePayment };
+const getPaymentsByUserId = async (req, res) => {
+    try {
+        const { userId } = req.params;
+        const payments = await Payment.find({ userId: parseInt(userId) })
+            .populate({
+                path: 'userId',
+                foreignField: 'userId',
+                model: 'User',
+                select: 'userId name phone',
+                justOne: true
+            });
+
+        if (!payments || payments.length === 0) {
+            return res.status(404).json({ success: false, message: 'No payments found for this user.' });
+        }
+
+        const formattedPayments = payments.map(formatPaymentDetails);
+        res.status(200).json({ success: true, message: 'Payments fetched successfully by user ID.', data: formattedPayments });
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
+    }
+};
+
+module.exports = { createPayment, getAllPayments, getPaymentById, updatePayment, deletePayment, getPaymentsByUserId };

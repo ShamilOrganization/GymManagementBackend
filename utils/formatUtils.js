@@ -30,14 +30,15 @@ const formatUserDetails = async (user) => {
 };
 
 const formatPaymentDetails = (payment) => {
-    return {
+    const details = {
         id: payment.paymentId,
-        userId: payment.userId,
         amount: payment.amount,
         status: payment.status,
+        user: { id:payment.userId.userId, name: payment.userId.name, phone: payment.userId.phone, },
         createdAt: payment.createdAt,
         updatedAt: payment.updatedAt,
     };
+    return details;
 };
 
 const formatGymDetails = (gym) => {
