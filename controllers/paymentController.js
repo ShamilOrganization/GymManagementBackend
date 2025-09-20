@@ -1,7 +1,7 @@
 const Payment = require('../models/Payment');
 const User = require('../models/User');
 const moment = require('moment');
-const { calculateSingleUserPendingAmount } = require('../scripts/calculatePendingAmount');
+const { calculateSingleUserPendingAmount } = require('../utils/calculatePendingAmount');
 const { formatPaymentDetails } = require('../utils/formatUtils');
 
 // Create a new payment

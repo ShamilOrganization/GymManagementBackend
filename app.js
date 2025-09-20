@@ -5,9 +5,9 @@ const userRoutes = require('./routes/userRoutes');
 const paymentRoutes = require('./routes/paymentRoutes');
 const gymRoutes = require('./routes/gymRoutes');
 const calculationRoutes = require('./routes/calculationRoutes');
-const testRoutes = require('./scripts/test/testRoutes');
+// const testRoutes = require('./scripts/test/testRoutes');
 const path = require('path');
-require('./scripts/calculatePendingAmount.js');
+require('./utils/calculatePendingAmount.js');
 const { notFound, errorHandler } = require('./middleware/errorMiddleware');
 
 

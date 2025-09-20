@@ -1,6 +1,6 @@
 const User = require('../models/User');
 const moment = require('moment');
-const { calculateAllUserPendingAmount, calculateSingleUserPendingAmount } = require('../scripts/calculatePendingAmount');
+const { calculateAllUserPendingAmount, calculateSingleUserPendingAmount } = require('../utils/calculatePendingAmount');
 
 const triggerCalculatePendingAmounts = async (req, res) => {
     try {
