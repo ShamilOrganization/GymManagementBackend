@@ -4,7 +4,7 @@ const { calculateSingleUserPendingAmount } = require('../utils/calculatePendingA
 
 const getAllMembers = async (req, res) => {
     const gymId = req.user.gymId;
-    const { search, startDate, endDate } = req.query;
+    const { search, startDate, endDate, page = 1, limit = 20 } = req.query;
 
     let query = { gymId, role: 'member' };
 
@@ -27,6 +27,28 @@ const getAllMembers = async (req, res) => {
         }
     }
 
+    const skip = (parseInt(page) - 1) * parseInt(limit);
+    const totalUsers = await User.countDocuments(query);
+    const totalPages = Math.ceil(totalUsers / parseInt(limit));
+
+    // Fetch all users matching the query for summary calculation
+    const allUsersForSummary = await User.find(query).select('-password').populate({
+        path: 'lastPaymentId',
+        foreignField: 'paymentId',
+        model: 'Payment',
+        select: 'paymentId amount createdAt',
+        justOne: true
+    });
+    const cleanedAllUsersForSummary = await Promise.all(allUsersForSummary.map(async (user) => {
+        return await formatUserDetails(user);
+    }));
+
+    // Calculate summary based on all matching users
+    const total = cleanedAllUsersForSummary.length;
+    const active = cleanedAllUsersForSummary.filter(user => user.status === 'active').length;
+    const pending = cleanedAllUsersForSummary.filter(user => user.status === 'pending').length;
+    const closed = cleanedAllUsersForSummary.filter(user => user.status === 'closed').length;
+
     const users = await User.find(query).select('-password').populate({
         // const users = await User.find({ gymId, }).select('-password').populate({
         path: 'lastPaymentId',
@@ -34,7 +56,9 @@ const getAllMembers = async (req, res) => {
         model: 'Payment',
         select: 'paymentId amount createdAt',
         justOne: true
-    });
+    })
+        .skip(skip)
+        .limit(parseInt(limit));
     // const users = await User.find({ gymId, role: 'member' }).select('-password');
     // Map users to clean format
     const cleanedUsers = await Promise.all(users.map(async (user) => {
@@ -42,10 +66,10 @@ const getAllMembers = async (req, res) => {
     }));
 
     // Calculate summary
-    const total = cleanedUsers.length;
-    const active = cleanedUsers.filter(user => user.status === 'active').length;
-    const pending = cleanedUsers.filter(user => user.status === 'pending').length;
-    const closed = cleanedUsers.filter(user => user.status === 'closed').length;
+    // const total = cleanedUsers.length;
+    // const active = cleanedUsers.filter(user => user.status === 'active').length;
+    // const pending = cleanedUsers.filter(user => user.status === 'pending').length;
+    // const closed = cleanedUsers.filter(user => user.status === 'closed').length;
 
     res.json({
         success: true,
@@ -57,7 +81,10 @@ const getAllMembers = async (req, res) => {
                 pending,
                 closed
             },
-            members: cleanedUsers
+            members: cleanedUsers,
+            currentPage: parseInt(page),
+            totalPages,
+            totalUsers
         }
     });
 };
