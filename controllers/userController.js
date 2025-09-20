@@ -4,7 +4,30 @@ const { calculateSingleUserPendingAmount } = require('../utils/calculatePendingA
 
 const getAllMembers = async (req, res) => {
     const gymId = req.user.gymId;
-    const users = await User.find({ gymId, role: 'member' }).select('-password').populate({
+    const { search, startDate, endDate } = req.query;
+
+    let query = { gymId, role: 'member' };
+
+    if (search) {
+        query.$or = [
+            { name: { $regex: search, $options: 'i' } },
+            { phone: { $regex: search, $options: 'i' } }
+        ];
+    }
+
+    if (startDate || endDate) {
+        query.$and = [];
+        if (startDate) {
+            query.$and.push({ joinedDate: { $gte: new Date(startDate) } });
+            query.$and.push({ createdAt: { $gte: new Date(startDate) } });
+        }
+        if (endDate) {
+            query.$and.push({ joinedDate: { $lte: new Date(endDate) } });
+            query.$and.push({ createdAt: { $lte: new Date(endDate) } });
+        }
+    }
+
+    const users = await User.find(query).select('-password').populate({
         // const users = await User.find({ gymId, }).select('-password').populate({
         path: 'lastPaymentId',
         foreignField: 'paymentId',
