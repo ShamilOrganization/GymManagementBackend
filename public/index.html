@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -40,8 +41,17 @@
         }
 
         @keyframes float {
-            0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 1; }
-            50% { transform: translateY(-100px) rotate(180deg); opacity: 0.5; }
+
+            0%,
+            100% {
+                transform: translateY(0px) rotate(0deg);
+                opacity: 1;
+            }
+
+            50% {
+                transform: translateY(-100px) rotate(180deg);
+                opacity: 0.5;
+            }
         }
 
         /* Header Section */
@@ -66,6 +76,7 @@
                 opacity: 0;
                 transform: translateY(60px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -89,9 +100,17 @@
         }
 
         @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
+
+            100% {
+                transform: scale(1);
+            }
         }
 
         .main-title {
@@ -108,6 +127,7 @@
                 opacity: 0;
                 transform: translateX(-60px);
             }
+
             to {
                 opacity: 1;
                 transform: translateX(0);
@@ -126,6 +146,7 @@
                 opacity: 0;
                 transform: translateX(60px);
             }
+
             to {
                 opacity: 1;
                 transform: translateX(0);
@@ -141,8 +162,13 @@
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
         }
 
         .btn {
@@ -326,13 +352,28 @@
             animation: typewriter 0.5s ease-out forwards;
         }
 
-        .code-line:nth-child(1) { animation-delay: 0.5s; }
-        .code-line:nth-child(2) { animation-delay: 1s; }
-        .code-line:nth-child(3) { animation-delay: 1.5s; }
+        .code-line:nth-child(1) {
+            animation-delay: 0.5s;
+        }
+
+        .code-line:nth-child(2) {
+            animation-delay: 1s;
+        }
+
+        .code-line:nth-child(3) {
+            animation-delay: 1.5s;
+        }
 
         @keyframes typewriter {
-            from { opacity: 0; transform: translateX(-20px); }
-            to { opacity: 1; transform: translateX(0); }
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
         }
 
         /* Footer */
@@ -362,7 +403,7 @@
                 flex-direction: column;
                 align-items: center;
             }
-            
+
             .features-grid {
                 grid-template-columns: 1fr;
                 gap: 30px;
@@ -385,15 +426,21 @@
         }
 
         @keyframes glow {
-            from { box-shadow: 0 0 10px rgba(255, 255, 255, 0.2); }
-            to { box-shadow: 0 0 20px rgba(255, 255, 255, 0.4); }
+            from {
+                box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+            }
+
+            to {
+                box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+            }
         }
     </style>
 </head>
+
 <body>
     <!-- Animated Background Particles -->
     <div class="particles" id="particles"></div>
-    
+
     <!-- Scroll Progress Indicator -->
     <div class="scroll-indicator" id="scroll-indicator"></div>
 
@@ -423,34 +470,40 @@
                 <div class="feature-card">
                     <div class="feature-icon">👥</div>
                     <h3 class="feature-title">User Management</h3>
-                    <p class="feature-description">Complete user registration, authentication, and profile management system with advanced security features.</p>
+                    <p class="feature-description">Complete user registration, authentication, and profile management
+                        system with advanced security features.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">📊</div>
                     <h3 class="feature-title">Analytics & Reporting</h3>
-                    <p class="feature-description">Comprehensive analytics dashboard with real-time metrics, performance tracking, and detailed reports.</p>
+                    <p class="feature-description">Comprehensive analytics dashboard with real-time metrics, performance
+                        tracking, and detailed reports.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-title">Membership Plans</h3>
-                    <p class="feature-description">Flexible membership management with subscription handling, payment processing, and automated renewals.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">📅</div>
-                    <h3 class="feature-title">Scheduling System</h3>
-                    <p class="feature-description">Advanced booking system for classes, personal training sessions, and equipment reservations.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🔒</div>
-                    <h3 class="feature-title">Secure & Scalable</h3>
-                    <p class="feature-description">Enterprise-grade security with OAuth 2.0, data encryption, and scalable cloud infrastructure.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">⚡</div>
-                    <h3 class="feature-title">Real-time Updates</h3>
-                    <p class="feature-description">WebSocket support for real-time notifications, live updates, and instant synchronization across devices.</p>
+                        <p class="feature-description">Flexible membership management with subscription handling,
+                            payment processing, and automated renewals.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">📅</div>
+                        <h3 class="feature-title">Scheduling System</h3>
+                        <p class="feature-description">Advanced booking system for classes, personal training sessions,
+                            and equipment reservations.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🔒</div>
+                        <h3 class="feature-title">Secure & Scalable</h3>
+                        <p class="feature-description">Enterprise-grade security with OAuth 2.0, data encryption, and
+                            scalable cloud infrastructure.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">⚡</div>
+                        <h3 class="feature-title">Real-time Updates</h3>
+                        <p class="feature-description">WebSocket support for real-time notifications, live updates, and
+                            instant synchronization across devices.</p>
+                    </div>
                 </div>
             </div>
-        </div>
     </section>
 
     <!-- API Documentation Preview -->
@@ -475,7 +528,8 @@
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
-            <p>&copy; 2024 Gym Management API. Building the future of fitness technology.</p>
+            <p>&copy; 2024 Gym Management API. All rights reserved. <a href="/privacy-policy"
+                    style="color: white; text-decoration: underline;">Privacy Policy</a></p>
             <p style="margin-top: 10px; opacity: 0.7;">Empowering gyms worldwide with cutting-edge API solutions.</p>
         </div>
     </footer>
@@ -547,21 +601,21 @@
         }
 
         // Initialize everything
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             createParticles();
             setupScrollAnimations();
             setupSmoothScrolling();
             staggerFeatureCards();
-            
+
             // Add scroll event listener for progress indicator
             window.addEventListener('scroll', updateScrollIndicator);
-            
+
             // Initial call for scroll indicator
             updateScrollIndicator();
         });
 
         // Add some interactive cursor effects
-        document.addEventListener('mousemove', function(e) {
+        document.addEventListener('mousemove', function (e) {
             const cursor = document.querySelector('.cursor');
             if (!cursor) {
                 const newCursor = document.createElement('div');
@@ -579,11 +633,12 @@
                 `;
                 document.body.appendChild(newCursor);
             }
-            
+
             const cursorElement = document.querySelector('.cursor');
             cursorElement.style.left = (e.clientX - 10) + 'px';
             cursorElement.style.top = (e.clientY - 10) + 'px';
         });
     </script>
 </body>
+
 </html>

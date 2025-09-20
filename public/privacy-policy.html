@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy - Gym Management API</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Animated background particles */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0px) rotate(0deg);
+                opacity: 1;
+            }
+
+            50% {
+                transform: translateY(-100px) rotate(180deg);
+                opacity: 0.5;
+            }
+        }
+
+        /* Header Section */
+        .header {
+            position: relative;
+            min-height: 30vh;
+            /* Shorter header for content pages */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            z-index: 2;
+            padding: 50px 20px;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            padding: 0 20px;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(60px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .main-title {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 800;
+            color: white;
+            margin-bottom: 20px;
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            animation: slideInLeft 1s ease-out 0.3s both;
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-60px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Main Content Section */
+        .content-section {
+            padding: 50px 20px;
+            background: white;
+            position: relative;
+            z-index: 2;
+            min-height: 60vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .content-section h2 {
+            font-size: 2rem;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .content-section h3 {
+            font-size: 1.5rem;
+            color: #555;
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+
+        .content-section p,
+        .content-section ul {
+            color: #666;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+
+        .content-section ul {
+            list-style-type: disc;
+            margin-left: 20px;
+        }
+
+        .content-section ul li {
+            margin-bottom: 8px;
+        }
+
+        /* Footer */
+        .footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Scroll indicator */
+        .scroll-indicator {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #ff6b6b, #feca57);
+            z-index: 1000;
+            transition: width 0.1s ease;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Animated Background Particles -->
+    <div class="particles" id="particles"></div>
+
+    <!-- Scroll Progress Indicator -->
+    <div class="scroll-indicator" id="scroll-indicator"></div>
+
+    <!-- Header Section -->
+    <section class="header">
+        <div class="hero-content">
+            <h1 class="main-title">Privacy Policy</h1>
+        </div>
+    </section>
+
+    <!-- Privacy Policy Content Section -->
+    <section class="content-section">
+        <div class="container">
+            <h2>Introduction</h2>
+            <p>Welcome to Gym Management API's Privacy Policy. This policy explains what information we collect, how we
+                use it, and your choices regarding your information when you use our API services and website.</p>
+
+            <h3>Information We Collect</h3>
+            <p>We collect various types of information in connection with the services we provide, including:</p>
+            <ul>
+                <li><strong>Personal Information:</strong> This includes data that can be used to identify you, such as
+                    your name, email address, phone number, and billing information. We collect this when you register
+                    for our services, contact us, or make a payment.</li>
+                <li><strong>Usage Data:</strong> We automatically collect information about how you access and use our
+                    services. This may include your IP address, browser type, operating system, referral URLs, device
+                    information, and API usage patterns.</li>
+                <li><strong>Gym-related Data:</strong> For gym management services, we may collect data related to gym
+                    members (names, contact details, membership status, payment history), trainers, classes, and
+                    schedules. This data is provided by gym administrators using our API.</li>
+            </ul>
+
+            <h3>How We Use Your Information</h3>
+            <p>We use the information we collect for various purposes, including to:</p>
+            <ul>
+                <li>Provide, operate, and maintain our services.</li>
+                <li>Improve, personalize, and expand our services.</li>
+                <li>Understand and analyze how you use our services.</li>
+                <li>Develop new products, services, features, and functionality.</li>
+                <li>Communicate with you, either directly or through one of our partners, including for customer
+                    service, to provide you with updates and other information relating to the service, and for
+                    marketing and promotional purposes.</li>
+                <li>Process your transactions and manage your orders.</li>
+                <li>Find and prevent fraud.</li>
+            </ul>
+
+            <h3>Sharing Your Information</h3>
+            <p>We do not share your personal information with third parties except in the following limited
+                circumstances:</p>
+            <ul>
+                <li>With your consent.</li>
+                <li>For external processing by trusted third-party service providers who work on our behalf and agree to
+                    adhere to our privacy standards.</li>
+                <li>For legal reasons, such as to comply with a subpoena or other legal process, or to protect our
+                    rights or property.</li>
+                <li>In connection with a merger, acquisition, or sale of assets.</li>
+            </ul>
+
+            <h3>Data Security</h3>
+            <p>We implement a variety of security measures to maintain the safety of your personal information when you
+                enter, submit, or access your personal information.</p>
+
+            <h3>Your Rights</h3>
+            <p>Depending on your location, you may have the following rights regarding your personal information:</p>
+            <ul>
+                <li>The right to access, update, or delete the information we have on you.</li>
+                <li>The right to object to the processing of your personal information.</li>
+                <li>The right to request that we restrict the processing of your personal information.</li>
+                <li>The right to data portability.</li>
+                <li>The right to withdraw consent at any time.</li>
+            </ul>
+
+            <h3>Changes to This Privacy Policy</h3>
+            <p>We may update our Privacy Policy from time to time. We will notify you of any changes by posting the new
+                Privacy Policy on this page.</p>
+
+            <h3>Contact Us</h3>
+            <p>If you have any questions about this Privacy Policy, please contact us at shamilpp4115@gmail.com.</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 Gym Management API. Building the future of fitness technology.</p>
+            <p style="margin-top: 10px; opacity: 0.7;">Empowering gyms worldwide with cutting-edge API solutions.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Create animated background particles
+        function createParticles() {
+            const particles = document.getElementById('particles');
+            const particleCount = 50;
+
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 6 + 's';
+                particle.style.animationDuration = (Math.random() * 3 + 3) + 's';
+                particles.appendChild(particle);
+            }
+        }
+
+        // Scroll progress indicator
+        function updateScrollIndicator() {
+            const scrolled = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+            document.getElementById('scroll-indicator').style.width = scrolled + '%';
+        }
+
+        // Initialize everything
+        document.addEventListener('DOMContentLoaded', function () {
+            createParticles();
+
+            // Add scroll event listener for progress indicator
+            window.addEventListener('scroll', updateScrollIndicator);
+
+            // Initial call for scroll indicator
+            updateScrollIndicator();
+        });
+
+        // Add some interactive cursor effects
+        document.addEventListener('mousemove', function (e) {
+            const cursor = document.querySelector('.cursor');
+            if (!cursor) {
+                const newCursor = document.createElement('div');
+                newCursor.className = 'cursor';
+                newCursor.style.cssText = `
+                    position: fixed;
+                    width: 20px;
+                    height: 20px;
+                    background: radial-gradient(circle, rgba(255,107,107,0.6) 0%, transparent 70%);
+                    border-radius: 50%;
+                    pointer-events: none;
+                    z-index: 9999;
+                    mix-blend-mode: difference;
+                    transition: transform 0.1s ease;
+                `;
+                document.body.appendChild(newCursor);
+            }
+
+            const cursorElement = document.querySelector('.cursor');
+            cursorElement.style.left = (e.clientX - 10) + 'px';
+            cursorElement.style.top = (e.clientY - 10) + 'px';
+        });
+    </script>
+</body>
+
+</html>
